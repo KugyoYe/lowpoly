@@ -1,16 +1,31 @@
-name: Make Low Poly GLB
-
+  name: Convert to Low Poly GLB
+  run: |
+    python lowpoly.py ${{ github.event.inputs.file_path }} --target-faces ${{ github.event.inputs.target_faces }} --texture-resolution ${{ github.event.inputs.texture_resolution }} --multiresolution-levels ${{ github.event.inputs.multiresolution_levels }}
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
   workflow_dispatch:
     inputs:
-      filename:
+      file_name:
         description: 'Input file to convert to low poly GLB'
         required: true
-      targetfaces:
+      file_path:
+        description: 'Path to the input file'
+        required: true
+      target_faces:
         description: 'Target number of faces for the low poly model'
         required: false
         default: 7500
+      texture_resolution:
+        description: 'Texture resolution for the low poly model'
+        required: false
+        default: 2048
+      multiresolution_levels:
+        description: 'Number of multiresolution levels for the low poly model'
+        required: false
+        default: 3
+           
 
 jobs:
   build:
